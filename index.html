@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -1006,55 +1006,135 @@ function buildAudio() {
   });
 }
 
-let audioTimers = {};
+// ── AUDIO NARRATION SCRIPTS ──
+const audioScripts = [
+  `Introdução ao Apocalipse. O livro do Apocalipse, também chamado de Revelação, foi escrito pelo apóstolo João enquanto estava exilado na ilha de Patmos por volta de noventa e cinco depois de Cristo. O nome vem do grego apokalypsis, que significa revelação. A mensagem central é poderosa e cheia de esperança: Cristo venceu, e os seus também vencerão. O livro foi escrito para sete igrejas reais da Ásia Menor, que hoje corresponde à Turquia. Cada carta traz um retrato de Cristo, um diagnóstico espiritual e uma promessa gloriosa ao vencedor. O Apocalipse não é um livro para causar medo, mas para encher o coração de fé e esperança diante das tribulações.`,
+
+  `Éfeso — O Primeiro Amor. A primeira carta é dirigida à igreja de Éfeso, registrada em Apocalipse dois, versículos um ao sete. Éfeso era uma das maiores cidades do império romano, com cerca de duzentos e cinquenta mil habitantes. Abrigava o famoso templo de Ártemis, uma das sete maravilhas do mundo antigo. A igreja de Éfeso era trabalhadora, perseverante e intolerante ao erro. Havia testado falsos apóstolos e os rejeitado. Mas Cristo tem algo contra ela: abandonou o primeiro amor. O serviço continuava, a ortodoxia permanecia, mas o amor apaixonado por Deus havia esfriado. O remédio divino é simples e profundo: lembre-se de onde caíste, arrependa-te e volta às primeiras obras. A lição de Éfeso para nós hoje: não basta servir a Deus, é preciso amar a Deus. O serviço sem amor se torna religiosidade vazia.`,
+
+  `Esmirna — Fé na Perseguição. A segunda carta vai para Esmirna, em Apocalipse dois, versículos oito ao onze. Esmirna era uma bela cidade portuária chamada de a coroa da Ásia. A church sofria tribulação, era pobre materialmente e recebia calúnias de adversários. Mas Cristo declara algo surpreendente: tu és rico! A pobreza material não impedia a riqueza espiritual. Esta é uma das duas igrejas que não recebe nenhuma repreensão. Cristo encoraja: sê fiel até a morte, e dar-te-ei a coroa da vida. Policarpo, bispo de Esmirna e discípulo do apóstolo João, foi martirizado quando tinha oitenta e seis anos. Quando pressionado a negar Cristo, ele respondeu: oitenta e seis anos o tenho servido e ele nunca me fez mal algum. A lição de Esmirna: a fidelidade vale muito mais do que a prosperidade.`,
+
+  `Pérgamo — Discernimento Espiritual. A terceira carta é para Pérgamo, em Apocalipse dois, versículos doze ao dezessete. Pérgamo era a capital da província romana da Ásia, com uma enorme biblioteca de duzentos mil volumes e o grande altar de Zeus em sua colina. Cristo se refere a ela como o lugar onde está o trono de Satanás. Alguns cristãos permaneceram fiéis, incluindo Antipas, que foi martirizado por sua fé. Porém, outros haviam aceitado a doutrina de Balaão e dos nicolaítas, misturando a fé com imoralidade e idolatria. A falsidade não chegou anunciando que era falsa: chegou embrulhada em tolerância e abertura cultural. A lição de Pérgamo: cuidado com a mistura entre fé e pecado. Viver num ambiente hostil exige discernimento constante.`,
+
+  `Tiatira — Amor e Santidade. A quarta carta vai para Tiatira, em Apocalipse dois, versículos dezoito ao vinte e nove. Tiatira era conhecida por seus sindicatos comerciais, cada um com seus deuses patronos. A church tinha amor, fé, serviço e perseverança — e as últimas obras superavam as primeiras, sinal real de crescimento espiritual. Porém, tolerava uma falsa profetisa chamada Jezabel, que ensinava imoralidade e idolatria. A tolerância com o pecado foi confundida com amor. Mas o amor bíblico não é conivência: é correção misericordiosa, verdade falada com graça. Cristo promete ao vencedor a Estrela da Manhã, que é o próprio Cristo. A lição de Tiatira: a church precisa de amor, mas também de santidade.`,
+
+  `Sardes — Desperta! A quinta carta é para Sardes, em Apocalipse três, versículos um ao seis. Sardes foi uma das cidades mais ricas da antiguidade, capital do lendário rei Creso. A church tinha nome de viva, mas estava morta. As atividades religiosas continuavam, a reputação era boa, mas a vida real no Espírito havia se apagado. Cristo ordena: sê vigilante e fortalece o que resta, que estava para morrer. Há um remanescente fiel: poucas pessoas que não macularam suas vestes. Cristo promete ao vencedor vestes brancas e o nome escrito no livro da vida. A cidade de Sardes havia sido conquistada duas vezes por inimigos que escalaram suas muralhas por negligência dos guardas. Cristo usa essa história ao dizer: virei como ladrão. A lição de Sardes: a aparência espiritual não substitui a vida espiritual real.`,
+
+  `Filadélfia — A Porta Aberta. A sexta carta vai para Filadélfia, em Apocalipse três, versículos sete ao treze. Filadélfia significa amor fraternal. A church era pequena, tinha pouca força, mas havia guardado a Palavra de Cristo e não negado seu nome. Por isso, Cristo declara: coloquei diante de ti uma porta aberta que ninguém pode fechar. A chave de Davi que Cristo possui representa sua autoridade absoluta sobre as oportunidades da vida. Esta é a segunda church sem nenhuma repreensão. Cristo promete ao vencedor ser coluna no templo de Deus, com o nome de Deus, da Nova Jerusalém e o nome novo de Cristo. A lição de Filadélfia é poderosa: Deus não procura os mais poderosos, mas os mais fiéis. Com poucos recursos e muita fidelidade, portas sobrenaturais se abrem.`,
+
+  `Laodiceia — Nem Frio Nem Quente. A sétima e última carta vai para Laodiceia, em Apocalipse três, versículos quatorze ao vinte e dois. Laodiceia era uma cidade extremamente rica, centro banceiro e industrial, famosa pela lã negra, pelo colírio para olhos e pela água morna que chegava por aquedutos. Esta é a única church que não recebe nenhum elogio. Cristo diz: não és frio nem quente. Quero que fosses frio ou quente. Por seres morno, vomitar-te-ei da minha boca. A church dizia: estou rico, não preciso de nada. Mas Cristo vê a realidade: és miserável, lamentável, pobre, cego e nu. Então vem a imagem mais tocante do livro: Cristo do lado de fora da church, batendo à porta. Eis que estou à porta e bato. Ele não desistiu. Ainda bate. A lição de Laodiceia: a indiferença espiritual é o maior perigo para um cristão. Abre a porta antes que seja tarde.`,
+
+  `As Sete Igrejas Hoje. As mensagens às sete igrejas do Apocalipse não foram escritas apenas para comunidades do século primeiro. Elas são um espelho para a church em todas as épocas, incluindo a nossa. Você já perdeu o primeiro amor como Éfeso? Está enfrentando perseguição como Esmirna? Vive num ambiente hostil como Pérgamo? Tolera o que não deveria tolerar como Tiatira? Tem aparência de vivo mas está morto por dentro como Sardes? Está sendo fiel com pouca força como Filadélfia? Ou está morno e autossuficiente como Laodiceia? Cristo conhece cada church e cada coração. Ele elogia o que é genuíno, corrige o que está errado e convida ao arrependimento com misericórdia. A mensagem final do Apocalipse é de esperança: o Cordeiro venceu. E os que perseveram vencerão com ele.`,
+
+  `As Promessas ao Vencedor. Em cada uma das sete cartas, Cristo faz uma promessa especial ao vencedor. Estas sete promessas formam um tesouro espiritual incrível. Ao vencedor de Éfeso: comer da árvore da vida no paraíso de Deus. Ao vencedor de Esmirna: não sofrer dano da segunda morte, que é o julgamento eterno. Ao vencedor de Pérgamo: o maná escondido e uma pedrinha branca com um nome novo. Ao vencedor de Tiatira: autoridade sobre as nações e a Estrela da Manhã. Ao vencedor de Sardes: vestes brancas e o nome no livro da vida. Ao vencedor de Filadélfia: ser coluna no templo de Deus com nomes eternos gravados. E ao vencedor de Laodiceia: sentar com Cristo em seu trono. Estas promessas revelam que a vida cristã não termina na terra: ela culmina em comunhão eterna com Deus.`
+];
+
+let currentUtterance = null;
+let currentAudioIdx = null;
 let audioPos = {};
-let audioPlaying = {};
+let audioTimers = {};
 
 function toggleAudio(i) {
-  if (audioPlaying[i]) {
+  const btn = document.getElementById(`aplay-${i}`);
+  if (!('speechSynthesis' in window)) {
+    alert('Seu navegador não suporta síntese de voz. Tente o Google Chrome ou Microsoft Edge.');
+    return;
+  }
+
+  // Se já está tocando este áudio, pausar
+  if (currentAudioIdx === i && window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    currentAudioIdx = null;
+    btn.textContent = '▶';
     clearInterval(audioTimers[i]);
-    audioPlaying[i] = false;
-    document.getElementById(`aplay-${i}`).textContent = '▶';
-  } else {
-    Object.keys(audioTimers).forEach(k => {
-      clearInterval(audioTimers[k]);
-      audioPlaying[k] = false;
-      const btn = document.getElementById(`aplay-${k}`);
-      if(btn) btn.textContent = '▶';
-    });
-    audioPlaying[i] = true;
-    document.getElementById(`aplay-${i}`).textContent = '⏸';
-    const dur = parseDur(audioList[i].duration);
-    if (!audioPos[i]) audioPos[i] = 0;
-    audioTimers[i] = setInterval(() => {
-      audioPos[i]++;
-      if (audioPos[i] >= dur) { audioPos[i] = 0; clearInterval(audioTimers[i]); audioPlaying[i]=false; document.getElementById(`aplay-${i}`).textContent='▶'; }
-      updateAudioUI(i, dur);
-    }, 1000);
+    return;
+  }
+
+  // Parar qualquer áudio em andamento
+  stopAllAudio();
+
+  // Iniciar narração
+  const script = audioScripts[i] || `${audioList[i].title}. ${audioList[i].desc}`;
+  const utter = new SpeechSynthesisUtterance(script);
+  utter.lang = 'pt-BR';
+  utter.rate = 0.92;
+  utter.pitch = 1.0;
+
+  // Tentar usar voz em português
+  const voices = window.speechSynthesis.getVoices();
+  const ptVoice = voices.find(v => v.lang.startsWith('pt')) || voices.find(v => v.lang.startsWith('pt-BR'));
+  if (ptVoice) utter.voice = ptVoice;
+
+  currentUtterance = utter;
+  currentAudioIdx = i;
+  btn.textContent = '⏸';
+  audioPos[i] = audioPos[i] || 0;
+
+  // Simular progresso visual enquanto fala
+  const estDur = script.length / 14; // ~14 chars por segundo
+  const startPos = audioPos[i];
+  const startTime = Date.now();
+
+  clearInterval(audioTimers[i]);
+  audioTimers[i] = setInterval(() => {
+    const elapsed = (Date.now() - startTime) / 1000;
+    audioPos[i] = Math.min(startPos + elapsed, estDur);
+    const bar = document.getElementById(`apbar-${i}`);
+    const time = document.getElementById(`atime-${i}`);
+    if (bar) bar.style.width = (audioPos[i] / estDur * 100) + '%';
+    if (time) time.textContent = fmtTime(Math.floor(audioPos[i])) + ' / ' + fmtTime(Math.floor(estDur));
+  }, 500);
+
+  utter.onend = () => {
+    clearInterval(audioTimers[i]);
+    audioPos[i] = 0;
+    currentAudioIdx = null;
+    const b = document.getElementById(`aplay-${i}`);
+    if (b) b.textContent = '▶';
+    const bar = document.getElementById(`apbar-${i}`);
+    if (bar) bar.style.width = '0%';
+    const time = document.getElementById(`atime-${i}`);
+    if (time) time.textContent = '0:00 / ' + fmtTime(Math.floor(estDur));
+  };
+
+  utter.onerror = () => {
+    clearInterval(audioTimers[i]);
+    currentAudioIdx = null;
+    const b = document.getElementById(`aplay-${i}`);
+    if (b) b.textContent = '▶';
+  };
+
+  window.speechSynthesis.speak(utter);
+}
+
+function stopAllAudio() {
+  window.speechSynthesis.cancel();
+  Object.keys(audioTimers).forEach(k => clearInterval(audioTimers[k]));
+  document.querySelectorAll('.audio-play-btn').forEach(b => b.textContent = '▶');
+  currentAudioIdx = null;
+}
+
+function skipAudio(i, sec) {
+  // Reinicia narração do mesmo áudio (Speech API não suporta seek)
+  if (currentAudioIdx === i) {
+    stopAllAudio();
+    setTimeout(() => toggleAudio(i), 100);
+  }
+}
+
+function seekAudio(el, i) {
+  if (currentAudioIdx === i) {
+    stopAllAudio();
+    setTimeout(() => toggleAudio(i), 100);
   }
 }
 
 function parseDur(s) { const [m,sec] = s.split(':').map(Number); return m*60+sec; }
-function fmtTime(s) { return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}` }
+function fmtTime(s) { const t = Math.floor(s); return `${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}` }
 
-function updateAudioUI(i, dur) {
-  const bar = document.getElementById(`apbar-${i}`);
-  const time = document.getElementById(`atime-${i}`);
-  if(bar) bar.style.width = (audioPos[i]/dur*100)+'%';
-  if(time) time.textContent = `${fmtTime(audioPos[i])} / ${audioList[i].duration}`;
-}
-
-function skipAudio(i, sec) {
-  const dur = parseDur(audioList[i].duration);
-  audioPos[i] = Math.max(0, Math.min(dur, (audioPos[i]||0)+sec));
-  updateAudioUI(i, dur);
-}
-
-function seekAudio(el, i) {
-  const rect = el.getBoundingClientRect();
-  const dur = parseDur(audioList[i].duration);
-  audioPos[i] = Math.round((event.clientX - rect.left)/rect.width * dur);
-  updateAudioUI(i, dur);
+// Carregar vozes ao iniciar
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
 
 // ════════════════════════════════════
