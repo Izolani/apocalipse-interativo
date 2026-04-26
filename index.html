@@ -143,7 +143,7 @@
   .tl-item h4 { color:var(--gold); font-size:14px; margin-bottom:4px; }
   .tl-item p { font-size:13px; color:var(--muted); line-height:1.6; }
 
-  /* ── ASSISTANT ── */
+    /* ── ASSISTANT ── */
   .assistant-wrap { display:flex; flex-direction:column; height:calc(100vh - 60px); }
   .chat-messages { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:12px; }
   .msg { max-width:85%; padding:12px 14px; border-radius:14px; font-size:14px; line-height:1.7; }
@@ -207,6 +207,11 @@
       <div class="extra-title">Mapa</div>
       <div class="extra-desc">Onde ficavam as igrejas</div>
     </div>
+<div class="extra-card" onclick="showScreen('pdf-apocalipse')">
+  <div class="extra-icon">📘</div>
+  <div class="extra-title">Apocalipse Explicado</div>
+  <div class="extra-desc">Estudo em PDF</div>
+</div>
     <div class="extra-card" onclick="startQuiz()">
       <div class="extra-icon">🧠</div>
       <div class="extra-title">Quiz Bíblico</div>
@@ -859,18 +864,18 @@ function switchTab(btn, tabId) {
 // ════════════════════════════════════
 function buildMap() {
   const list = document.getElementById('map-churches-list');
-  churches.forEach((c,i) => {
-    list.innerHTML += `
-      <div class="map-church-item" onclick="showChurch(${i})">
-        <div class="map-dot" style="background:${c.color}20;border:2px solid ${c.color}">${c.icon}</div>
-        <div>
-          <div class="map-church-name">${c.num}. ${c.name}</div>
-          <div class="map-church-loc">${c.mapCity}</div>
-        </div>
-      </div>`;
-  });
-}
 
+  list.innerHTML = `
+    <div class="map-church-item">
+      <div style="width:100%">
+        <div class="map-church-name">Teste Éfeso</div>
+
+        <img src="./imagens/efeso.jpg"
+             style="width:100%; height:180px; object-fit:cover; border-radius:10px; display:block;">
+      </div>
+    </div>
+  `;
+}
 // ════════════════════════════════════
 //  QUIZ
 // ════════════════════════════════════
@@ -1185,5 +1190,13 @@ buildMap();
 buildDevotionals();
 buildAudio();
 </script>
+<section id="pdf-apocalipse" class="screen active">
+  <h2>📘 Apocalipse Explicado</h2>
+  <p>Clique no botão abaixo para abrir o estudo em PDF.</p>
+
+  <a href="Apocalipse explicado.pdf" target="_blank" class="botao-pdf">
+    Abrir PDF
+  </a>
+</section>
 </body>
 </html>
