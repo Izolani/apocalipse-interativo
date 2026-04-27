@@ -864,17 +864,38 @@ function switchTab(btn, tabId) {
 // ════════════════════════════════════
 function buildMap() {
   const list = document.getElementById('map-churches-list');
+  list.innerHTML = "";
 
-  list.innerHTML = `
-    <div class="map-church-item">
-      <div style="width:100%">
-        <div class="map-church-name">Teste Éfeso</div>
+  churches.forEach((c, i) => {
 
-        <img src="./imagens/efeso.jpg"
-             style="width:100%; height:180px; object-fit:cover; border-radius:10px; display:block;">
+    let imagem = "";
+
+    if (c.name === "Éfeso") imagem = "./imagens/efeso.jpg";
+    else if (c.name === "Esmirna") imagem = "./imagens/esmirna.jpg";
+    else if (c.name === "Pérgamo") imagem = "./imagens/pergamo.jpg";
+    else if (c.name === "Tiatira") imagem = "./imagens/tiatira.jpg";
+    else if (c.name === "Sardes") imagem = "./imagens/sardes.jpg";
+    else if (c.name === "Filadélfia") imagem = "./imagens/filadelfia.jpg";
+    else if (c.name === "Laodiceia") imagem = "./imagens/laodiceia.jpg";
+
+    list.innerHTML += `
+      <div class="map-church-item" onclick="showChurch(${i})">
+        <div class="map-dot" style="background:${c.color}20;border:2px solid ${c.color}">
+          ${c.icon}
+        </div>
+
+        <div style="width:100%">
+          <div class="map-church-name">${c.num}. ${c.name}</div>
+          <div class="map-church-loc">${c.mapCity}</div>
+
+          <img src="${imagem}"
+               style="width:100%; height:150px; object-fit:cover; margin-top:8px; border-radius:10px; display:block;"
+               loading="lazy"
+               onerror="this.style.display='none'">
+        </div>
       </div>
-    </div>
-  `;
+    `;
+  });
 }
 // ════════════════════════════════════
 //  QUIZ
